@@ -21,11 +21,100 @@ serve(async (req) => {
 
   try {
     const body = await req.json();
-    const { name, phone, email, service, message, created_at, appointment_time } = body;
+    const { name, phone, email, service, stylist, message, created_at, appointment_time, website } = body;
+
+    // Kiểm tra honeypot field - chống bot
+    if (website) {
+      console.warn("Bot detected - honeypot field filled");
+      return new Response(
+        JSON.stringify({
+          error: "Invalid request",
+          message: "Bot detected",
+        }),
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+          status: 400,
+        }
+      );
+    }
 
     if (!RESEND_API_KEY) {
       throw new Error("Missing RESEND_API_KEY secret");
     }
+
+    // VALIDATION: Kiểm tra appointment_time không phải quá khứ
+    if (appointment_time) {
+      const appointmentDate = new Date(appointment_time);
+      const now = new Date();
+      
+      // Nếu thời gian đặt lịch là quá khứ, reject
+      if (appointmentDate < now) {
+        return new Response(
+          JSON.stringify({
+            error: "Invalid appointment time",
+            message: "Appointment time cannot be in the past",
+          }),
+          {
+            headers: {
+              "Content-Type": "application/json",
+              "Access-Control-Allow-Origin": "*",
+            },
+            status: 400,
+          }
+        );
+      }
+      
+      // Kiểm tra phải đặt trước ít nhất 1 giờ
+      const oneHourFromNow = new Date(now.getTime() + 60 * 60 * 1000);
+      if (appointmentDate < oneHourFromNow) {
+        return new Response(
+          JSON.stringify({
+            error: "Invalid appointment time",
+            message: "Appointment must be at least 1 hour in advance",
+          }),
+          {
+            headers: {
+              "Content-Type": "application/json",
+              "Access-Control-Allow-Origin": "*",
+            },
+            status: 400,
+          }
+        );
+      }
+    }
+
+    // Format datetime với timezone Slovakia để đảm bảo nhất quán
+    const formatAppointmentTime = (timeStr: string | null) => {
+      if (!timeStr) return "Nezadané";
+      try {
+        const date = new Date(timeStr);
+        return date.toLocaleString("sk-SK", {
+          timeZone: "Europe/Bratislava",
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: false,
+        });
+      } catch (e) {
+        return "Nezadané";
+      }
+    };
+
+    const formatCreatedTime = (timeStr: string | null) => {
+      const date = timeStr ? new Date(timeStr) : new Date();
+      return date.toLocaleString("sk-SK", {
+        timeZone: "Europe/Bratislava",
+      });
+    };
+
+    const appointmentTimeFormatted = formatAppointmentTime(appointment_time);
+    const createdTimeFormatted = formatCreatedTime(created_at);
 
     const html = `
       <!DOCTYPE html>
@@ -63,26 +152,19 @@ serve(async (req) => {
             </div>
             
             <div class="info-row">
+              <strong>Stylista:</strong> ${stylist || "Nešpecifikované"}
+            </div>
+            
+            <div class="info-row">
               <strong>Poznámka:</strong> ${message || "Bez poznámky"}
             </div>
             
             <div class="info-row">
-              <strong>Čas rezervácie (Slovensko):</strong> ${
-                appointment_time
-                  ? new Date(appointment_time).toLocaleString("sk-SK", {
-                      weekday: "long",
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })
-                  : "Nezadané"
-              }
+              <strong>Čas rezervácie (Slovensko):</strong> ${appointmentTimeFormatted}
             </div>
             
             <div class="info-row">
-              <strong>Čas odoslania formulára:</strong> ${created_at ? new Date(created_at).toLocaleString("sk-SK") : new Date().toLocaleString("sk-SK")}
+              <strong>Čas odoslania formulára:</strong> ${createdTimeFormatted}
             </div>
             
             <hr>

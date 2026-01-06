@@ -460,6 +460,43 @@
             </div>
 
             <div class="form-section">
+              <h3 class="form-section-title">Vyberte si stylistu</h3>
+              <div class="form-group form-group--full">
+                <label>Preferovaný stylista <span class="optional">(nepovinné)</span></label>
+                <div class="stylist-options">
+                  <label class="stylist-option">
+                    <input type="radio" name="stylist" value="Tùng Phạm">
+                    <div class="stylist-option-content">
+                      <span class="stylist-name">Tùng Phạm</span>
+                      <span class="stylist-title">Senior art director</span>
+                    </div>
+                  </label>
+                  <label class="stylist-option">
+                    <input type="radio" name="stylist" value="Ngô Sơn">
+                    <div class="stylist-option-content">
+                      <span class="stylist-name">Ngô Sơn</span>
+                      <span class="stylist-title">Color specialist</span>
+                    </div>
+                  </label>
+                  <label class="stylist-option">
+                    <input type="radio" name="stylist" value="Trần Quân">
+                    <div class="stylist-option-content">
+                      <span class="stylist-name">Trần Quân</span>
+                      <span class="stylist-title">Barber &amp; grooming expert</span>
+                    </div>
+                  </label>
+                  <label class="stylist-option">
+                    <input type="radio" name="stylist" value="Sophia Hart">
+                    <div class="stylist-option-content">
+                      <span class="stylist-name">Sophia Hart</span>
+                      <span class="stylist-title">Texture specialist</span>
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-section">
               <h3 class="form-section-title">Poznámky</h3>
               <div class="form-group form-group--full">
                 <label for="booking_message">Opíšte, aký look si želáte <span class="optional">(nepovinné)</span></label>
@@ -467,6 +504,16 @@
               </div>
             </div>
 
+            <!-- Honeypot field - ẩn khỏi user nhưng bot sẽ điền -->
+            <input 
+              type="text" 
+              name="website" 
+              style="position: absolute; left: -9999px; opacity: 0; pointer-events: none;"
+              tabindex="-1"
+              autocomplete="off"
+              aria-hidden="true"
+            >
+            
             <div class="form-footer">
               <p class="form-note">
                 <span class="required-indicator">*</span> Povinné polia: meno, telefón a preferovaný dátum &amp; čas. Ostatné údaje sú nepovinné, ale pomôžu nám lepšie sa pripraviť.
@@ -604,6 +651,10 @@
           <div class="detail-row">
             <span class="detail-label">Služba:</span>
             <span class="detail-value" id="modal-service">-</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Stylista:</span>
+            <span class="detail-value" id="modal-stylist">-</span>
           </div>
           <div class="detail-row">
             <span class="detail-label">Čas:</span>

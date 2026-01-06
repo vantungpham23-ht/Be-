@@ -516,6 +516,38 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         // Update minTime on ready
         updateMinTime(instance, selectedDates);
+        
+        // Force disable past dates on mobile
+        setTimeout(() => {
+          const today = new Date();
+          today.setHours(0, 0, 0, 0);
+          
+          // Disable all past dates
+          const allDays = calendar.querySelectorAll(".flatpickr-day");
+          allDays.forEach((dayEl) => {
+            // Skip if already disabled
+            if (dayEl.classList.contains("flatpickr-disabled") || dayEl.classList.contains("prevMonthDay")) {
+              return;
+            }
+            
+            const dayText = dayEl.textContent.trim();
+            const dayNum = parseInt(dayText);
+            
+            if (!isNaN(dayNum) && dayNum >= 1 && dayNum <= 31) {
+              const currentMonth = instance.currentMonth;
+              const currentYear = instance.currentYear;
+              const dayDate = new Date(currentYear, currentMonth, dayNum);
+              dayDate.setHours(0, 0, 0, 0);
+              
+              if (dayDate < today) {
+                dayEl.classList.add("flatpickr-disabled");
+                dayEl.setAttribute("aria-disabled", "true");
+                dayEl.style.pointerEvents = "none";
+                dayEl.style.cursor = "not-allowed";
+              }
+            }
+          });
+        }, 100);
       },
       onChange: function(selectedDates, dateStr, instance) {
         // Update minTime when date changes
@@ -730,6 +762,61 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  // Rate limiting - chống spam
+  const RATE_LIMIT_KEY = "booking_rate_limit";
+  const RATE_LIMIT_COUNT = 3; // Số lần được đặt trong khoảng thời gian
+  const RATE_LIMIT_WINDOW = 60 * 60 * 1000; // 1 giờ (milliseconds)
+
+  const checkRateLimit = () => {
+    const stored = localStorage.getItem(RATE_LIMIT_KEY);
+    if (!stored) {
+      return true; // Chưa có record, cho phép
+    }
+    
+    const data = JSON.parse(stored);
+    const now = Date.now();
+    
+    // Nếu đã quá thời gian window, reset
+    if (now - data.timestamp > RATE_LIMIT_WINDOW) {
+      localStorage.removeItem(RATE_LIMIT_KEY);
+      return true;
+    }
+    
+    // Kiểm tra số lần đã đặt
+    if (data.count >= RATE_LIMIT_COUNT) {
+      const remainingMinutes = Math.ceil((RATE_LIMIT_WINDOW - (now - data.timestamp)) / (60 * 1000));
+      alert(`Príliš veľa rezervácií. Skúste to znova o ${remainingMinutes} minút.`);
+      return false;
+    }
+    
+    return true;
+  };
+
+  const updateRateLimit = () => {
+    const stored = localStorage.getItem(RATE_LIMIT_KEY);
+    const now = Date.now();
+    
+    if (!stored) {
+      localStorage.setItem(RATE_LIMIT_KEY, JSON.stringify({
+        count: 1,
+        timestamp: now
+      }));
+    } else {
+      const data = JSON.parse(stored);
+      if (now - data.timestamp > RATE_LIMIT_WINDOW) {
+        // Reset nếu đã quá window
+        localStorage.setItem(RATE_LIMIT_KEY, JSON.stringify({
+          count: 1,
+          timestamp: now
+        }));
+      } else {
+        // Tăng count
+        data.count += 1;
+        localStorage.setItem(RATE_LIMIT_KEY, JSON.stringify(data));
+      }
+    }
+  };
+
   if (contactForm && supabaseClient) {
     contactForm.addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -738,7 +825,35 @@ document.addEventListener("DOMContentLoaded", () => {
       const originalText = submitButton ? submitButton.textContent : "";
 
       const formData = new FormData(contactForm);
+      
+      // Kiểm tra honeypot field - chống bot
+      const honeypotValue = formData.get("website");
+      if (honeypotValue) {
+        // Bot đã điền vào honeypot field, reject
+        console.warn("Bot detected");
+        return;
+      }
+      
+      // Kiểm tra rate limiting
+      if (!checkRateLimit()) {
+        if (submitButton) {
+          submitButton.disabled = false;
+          submitButton.textContent = originalText;
+        }
+        return;
+      }
+      
       const datetimeValue = formData.get("appointment_datetime");
+      
+      // VALIDATION: Kiểm tra ngày đã qua
+      if (!datetimeValue) {
+        alert("Prosím vyberte dátum a čas rezervácie.");
+        if (submitButton) {
+          submitButton.disabled = false;
+          submitButton.textContent = originalText;
+        }
+        return;
+      }
       
       // Convert Flatpickr format (Y-m-d H:i) sang ISO string
       // Flatpickr trả về format: "2026-01-26 14:30" (local time)
@@ -747,7 +862,67 @@ document.addEventListener("DOMContentLoaded", () => {
         // Convert "YYYY-MM-DD HH:MM" thành ISO string
         const [datePart, timePart] = datetimeValue.split(" ");
         if (datePart && timePart) {
-          appointmentDateTime = new Date(`${datePart}T${timePart}`).toISOString();
+          // Parse thành các phần riêng biệt
+          const [year, month, day] = datePart.split("-").map(Number);
+          const [hour, minute] = timePart.split(":").map(Number);
+          
+          // Tạo Date object với local timezone
+          // Month trong Date constructor là 0-indexed (0 = January)
+          const localDate = new Date(year, month - 1, day, hour, minute);
+          
+          // Kiểm tra date hợp lệ
+          if (isNaN(localDate.getTime())) {
+            alert("Neplatný formát dátumu. Prosím vyberte dátum znova.");
+            if (submitButton) {
+              submitButton.disabled = false;
+              submitButton.textContent = originalText;
+            }
+            return;
+          }
+          
+          // VALIDATION: Kiểm tra ngày đã qua
+          const now = new Date();
+          if (localDate < now) {
+            alert("Nemôžete si rezervovať termín v minulosti. Prosím vyberte budúci dátum a čas.");
+            if (submitButton) {
+              submitButton.disabled = false;
+              submitButton.textContent = originalText;
+            }
+            return;
+          }
+          
+          // Kiểm tra nếu là hôm nay nhưng giờ đã qua hoặc quá gần
+          const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+          const selectedDay = new Date(year, month - 1, day);
+          
+          if (selectedDay.getTime() === today.getTime()) {
+            // Nếu là hôm nay, kiểm tra giờ
+            const currentHour = now.getHours();
+            const currentMinute = now.getMinutes();
+            const currentTimeMinutes = currentHour * 60 + currentMinute;
+            const selectedTimeMinutes = hour * 60 + minute;
+            
+            // Cần đặt trước ít nhất 1 giờ
+            if (selectedTimeMinutes <= currentTimeMinutes + 60) {
+              alert("Prosím rezervujte si termín najmenej 1 hodinu dopredu.");
+              if (submitButton) {
+                submitButton.disabled = false;
+                submitButton.textContent = originalText;
+              }
+              return;
+            }
+          }
+          
+          // Convert sang ISO string (UTC)
+          // Date object đã được tạo với local time, nên toISOString() sẽ convert đúng
+          appointmentDateTime = localDate.toISOString();
+        } else {
+          alert("Neplatný formát dátumu. Prosím vyberte dátum znova.");
+          if (submitButton) {
+            submitButton.disabled = false;
+            submitButton.textContent = originalText;
+          }
+          return;
         }
       }
 
@@ -756,6 +931,7 @@ document.addEventListener("DOMContentLoaded", () => {
         phone: formData.get("phone"),
         email: formData.get("email"),
         service: formData.get("service") || null,
+        stylist: formData.get("stylist") || null,
         message: formData.get("message") || null,
         appointment_time: appointmentDateTime,
       };
@@ -785,6 +961,11 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("modal-phone").textContent = payload.phone || "-";
         document.getElementById("modal-email").textContent = payload.email || "-";
         document.getElementById("modal-service").textContent = payload.service || "Nešpecifikované";
+        // Hiển thị stylist nếu có
+        const modalStylist = document.getElementById("modal-stylist");
+        if (modalStylist) {
+          modalStylist.textContent = payload.stylist || "Nešpecifikované";
+        }
         
         // Format času (slovenský čas)
         if (appointmentDateTime) {
@@ -809,6 +990,9 @@ document.addEventListener("DOMContentLoaded", () => {
         // Hiển thị modal ngay lập tức
         successModal.classList.add("show");
         document.body.style.overflow = "hidden";
+
+        // Update rate limit sau khi submit thành công
+        updateRateLimit();
 
         // Reset form
         contactForm.reset();
