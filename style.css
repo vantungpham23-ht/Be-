@@ -478,10 +478,18 @@ body {
   border-radius: var(--radius-lg);
   overflow: hidden;
   box-shadow: var(--shadow-soft);
-  background:
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.9)),
-    url("https://images.pexels.com/photos/3993445/pexels-photo-3993445.jpeg?auto=compress&cs=tinysrgb&w=1600")
-      center center / cover no-repeat fixed;
+  position: relative;
+  background: #000;
+}
+
+.about-media iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  object-fit: cover;
 }
 
 .parallax-bg {
