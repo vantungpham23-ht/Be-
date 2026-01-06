@@ -1,6 +1,12 @@
 // Handle sticky header, mobile nav, testimonial slider, and gallery tabs
 
 document.addEventListener("DOMContentLoaded", () => {
+  // Luôn đưa trang về đầu mỗi lần load và tắt tự động khôi phục vị trí cuộn của trình duyệt
+  if ("scrollRestoration" in window.history) {
+    window.history.scrollRestoration = "manual";
+  }
+  window.scrollTo(0, 0);
+
   const header = document.querySelector(".site-header");
   const navToggle = document.querySelector(".nav-toggle");
   const mobileNav = document.querySelector(".mobile-nav");
