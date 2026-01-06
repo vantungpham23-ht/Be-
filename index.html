@@ -103,13 +103,16 @@
           </ul>
         </div>
         <div class="about-media parallax-bg" aria-hidden="true">
-            <iframe 
-              src="img/video.mp4"
-              style="width: 100%; height: 100%; border: none; object-fit:cover;"
-              allow="autoplay; encrypted-media; picture-in-picture"
-              allowfullscreen
-              title="Salon atmosphere video"
-            ></iframe>
+            <video 
+              autoplay
+              loop
+              muted
+              playsinline
+              class="about-video"
+            >
+              <source src="img/video.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
         </div>
       </div>
     </section>

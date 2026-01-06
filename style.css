@@ -477,19 +477,32 @@ body {
   height: 360px;
   border-radius: var(--radius-lg);
   overflow: hidden;
-  box-shadow: var(--shadow-soft);
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.8),
+    0 0 0 1px rgba(237, 229, 131, 0.1),
+    inset 0 0 40px rgba(0, 0, 0, 0.5);
   position: relative;
   background: #000;
+  transition: transform var(--transition), box-shadow var(--transition);
 }
 
-.about-media iframe {
+.about-media:hover {
+  transform: translateY(-4px);
+  box-shadow: 
+    0 28px 80px rgba(0, 0, 0, 0.95),
+    0 0 0 1px rgba(237, 229, 131, 0.2),
+    inset 0 0 60px rgba(0, 0, 0, 0.6);
+}
+
+.about-video {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  border: none;
   object-fit: cover;
+  border: none;
+  outline: none;
 }
 
 .parallax-bg {
