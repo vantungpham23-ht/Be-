@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Be Hair & Barber | Luxusný Hair & Barber Ateliér</title>
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="img/be-logo.svg">
+  <link rel="alternate icon" href="img/be-logo.svg">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css" />
+  <!-- Flatpickr CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <!-- Supabase client -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- Flatpickr JS -->
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+</head>
+<body>
+  <!-- Sticky Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#home" class="logo-wrap">
+        <!-- Replace src with your actual logo or copy the SVG into this folder as be-logo.svg -->
+        <img src="img/be-logo.svg" alt="Be Luxury Salon Logo" class="logo-img">
+        <span class="logo-text"></span>
+      </a>
+
+      <nav class="main-nav">
+        <ul>
+          <li><a href="#home">Domov</a></li>
+          <li><a href="#services">Služby</a></li>
+          <li><a href="#gallery">Galéria</a></li>
+          <li><a href="#stylists">Náš tím</a></li>
+          <li><a href="#contact">Kontakt</a></li>
+        </ul>
+      </nav>
+
+      <a href="#contact" class="btn btn-gold header-cta">Rezervovať termín</a>
+
+      <button class="nav-toggle" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+
+    <!-- Mobile slide-in menu -->
+    <nav class="mobile-nav">
+      <ul>
+        <li><a href="#home">Domov</a></li>
+        <li><a href="#services">Služby</a></li>
+        <li><a href="#gallery">Galéria</a></li>
+        <li><a href="#stylists">Náš tím</a></li>
+        <li><a href="#contact">Kontakt</a></li>
+        <li><a href="#contact" class="btn btn-gold mobile-cta">Rezervovať termín</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section id="home" class="hero">
+      <div class="hero-overlay"></div>
+      <div class="hero-decoration hero-decoration--left"></div>
+      <div class="hero-decoration hero-decoration--right"></div>
+      <div class="container hero-content reveal">
+        <p class="eyebrow">Luxusný hair &amp; barber ateliér</p>
+        <h1 class="hero-title">
+          <span class="hero-title-line">Redefinujte</span>
+          <span class="hero-title-line hero-title-line--accent">svoj štýl</span>
+        </h1>
+        <p class="hero-subtitle">
+          Precízny strih, umelecké farbenie a starostlivosť o bradu v priestore, ktorý pripomína galériu, nie bežný salón.
+          <span class="hero-subtitle-accent">Vstúpte do sveta, kde sa vlasy stávajú dizajnom.</span>
+        </p>
+        <div class="hero-actions">
+          <a href="#contact" class="btn btn-gold">Objednať termín</a>
+          <a href="#gallery" class="btn btn-outline">Pozrieť lookbook</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- About & Atmosphere -->
+    <section id="about" class="section about">
+      <div class="container about-grid reveal">
+        <div class="about-text">
+          <h2>Atmosféra modernej elegancie</h2>
+          <p>
+            V Be Hair &amp; Barber nevstupujete len do salónu, ale do starostlivo komponovaného priestoru. Mramorové plochy, mäkké svetlo a čisté línie vytvárajú kulisu, kde vynikne každý detail vášho účesu.
+          </p>
+          <p>
+            Naši stylisti spájajú technickú precíznosť s umeleckým cítením. Pracujeme s prémiovými produktmi a individuálnymi konzultáciami, aby sme vytvorili vzhľad, ktorý pôsobí prirodzene, luxusne a sebavedomo.
+          </p>
+          <ul class="about-list">
+            <li>Individuálne konzultácie &amp; precízne strihy</li>
+            <li>Farebné techniky inšpirované módnymi editoriálmi</li>
+            <li>Súkromné pracovné miesta &amp; relaxačné umývacie zóny</li>
+          </ul>
+        </div>
+        <div class="about-media parallax-bg" aria-hidden="true">
+            <video src="img/video.mp4" autoplay muted loop style="width: 100%; height: 100%; object-fit: cover;"></video>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services & Pricing -->
+    <section id="services" class="section services">
+      <div class="container">
+        <header class="section-header">
+          <h2>Menu služieb</h2>
+          <p>Starostlivo vyskladaná ponuka pre dokonalý salonový zážitok.</p>
+        </header>
+
+        <div class="services-grid reveal">
+          <article class="service-category">
+            <h3>Strih &amp; styling</h3>
+            <ul>
+              <li>
+                <span>Dámsky signatúrny strih &amp; fúkanie</span>
+                <span class="dots"></span>
+                <span>€120</span>
+              </li>
+              <li>
+                <span>Pánsky precízny strih</span>
+                <span class="dots"></span>
+                <span>€80</span>
+              </li>
+              <li>
+                <span>Fúkaná &amp; styling</span>
+                <span class="dots"></span>
+                <span>€75</span>
+              </li>
+              <li>
+                <span>Spoločenský účes</span>
+                <span class="dots"></span>
+                <span>€150</span>
+              </li>
+            </ul>
+          </article>
+
+          <article class="service-category">
+            <h3>Farbenie</h3>
+            <ul>
+              <li>
+                <span>Lesk &amp; tónovanie</span>
+                <span class="dots"></span>
+                <span>€95</span>
+              </li>
+              <li>
+                <span>Jednofarebné farbenie</span>
+                <span class="dots"></span>
+                <span>€130</span>
+              </li>
+              <li>
+                <span>Balayage &amp; ručné tieňovanie</span>
+                <span class="dots"></span>
+                <span>od €260</span>
+              </li>
+              <li>
+                <span>Melír / lowlights</span>
+                <span class="dots"></span>
+                <span>od €220</span>
+              </li>
+            </ul>
+          </article>
+
+          <article class="service-category">
+            <h3>Kúry</h3>
+            <ul>
+              <li>
+                <span>Luxusný rituál pre vlasovú pokožku</span>
+                <span class="dots"></span>
+                <span>€90</span>
+              </li>
+              <li>
+                <span>Keratinové vyhladenie</span>
+                <span class="dots"></span>
+                <span>od €320</span>
+              </li>
+              <li>
+                <span>Olaplex – obnovujúca kúra</span>
+                <span class="dots"></span>
+                <span>€110</span>
+              </li>
+              <li>
+                <span>Reparačná maska</span>
+                <span class="dots"></span>
+                <span>€75</span>
+              </li>
+            </ul>
+          </article>
+
+          <article class="service-category">
+            <h3>Spa &amp; doplnky</h3>
+            <ul>
+              <li>
+                <span>Podpisová masáž hlavy</span>
+                <span class="dots"></span>
+                <span>€45</span>
+              </li>
+              <li>
+                <span>Úprava obočia</span>
+                <span class="dots"></span>
+                <span>€40</span>
+              </li>
+              <li>
+                <span>Modelácia brady</span>
+                <span class="dots"></span>
+                <span>€55</span>
+              </li>
+              <li>
+                <span>Express refresh (15 min)</span>
+                <span class="dots"></span>
+                <span>€35</span>
+              </li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gallery -->
+    <section id="gallery" class="section gallery">
+      <div class="container">
+        <header class="section-header section-header--center">
+          <h2>Lookbook</h2>
+          <p>Starostlivo vybrané účesy a farbenia z nášho ateliéru.</p>
+        </header>
+
+        <div class="gallery-tabs" role="tablist">
+          <button class="gallery-tab active" data-category="all" type="button">Všetko</button>
+          <button class="gallery-tab" data-category="men" type="button">Pánske</button>
+          <button class="gallery-tab" data-category="women" type="button">Dámske</button>
+          <button class="gallery-tab" data-category="color" type="button">Farbenie</button>
+        </div>
+
+        <div class="gallery-grid reveal">
+          <figure class="gallery-item" data-category="women">
+            <img src="img/women1.webp" alt="Elegant women's hairstyle">
+          </figure>
+          <figure class="gallery-item" data-category="women color">
+            <img src="img/wm2.webp" alt="Balayage color">
+          </figure>
+          <figure class="gallery-item" data-category="men">
+            <img src="img/m1.jpeg" alt="Men's haircut">
+          </figure>
+          <figure class="gallery-item" data-category="men color">
+            <img src="img/m2.webp" alt="Men's color style">
+          </figure>
+          <figure class="gallery-item" data-category="women">
+            <img src="img/c3.webp" alt="Women's haircut">
+          </figure>
+          <figure class="gallery-item" data-category="color">
+            <img src="img/c2.webp" alt="Creative color">
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stylists -->
+    <section id="stylists" class="section stylists">
+      <div class="container">
+        <header class="section-header section-header--center">
+          <h2>Náš tím</h2>
+          <p>Skúsení stylisti a coloristi, ktorí tvoria váš osobný podpis.</p>
+        </header>
+
+        <div class="stylists-grid reveal">
+          <article class="stylist-card">
+            <div class="stylist-photo">
+              <img src="img/tung.jpg" alt="Alex - Senior Art Director">
+            </div>
+            <h3>Tùng Phạm</h3>
+            <p class="stylist-title">Senior art director</p>
+            <div class="stylist-socials">
+              <a href="#" aria-label="Alex Instagram">IG</a>
+              <a href="#" aria-label="Alex Facebook">FB</a>
+              <a href="#" aria-label="Alex Pinterest">PI</a>
+            </div>
+          </article>
+
+          <article class="stylist-card">
+            <div class="stylist-photo">
+              <img src="img/son.jpg" alt="Mia - Color Specialist">
+            </div>
+            <h3>Ngô Sơn</h3>
+            <p class="stylist-title">Color specialist</p>
+            <div class="stylist-socials">
+              <a href="#" aria-label="Mia Instagram">IG</a>
+              <a href="#" aria-label="Mia Facebook">FB</a>
+              <a href="#" aria-label="Mia Pinterest">PI</a>
+            </div>
+          </article>
+
+          <article class="stylist-card">
+            <div class="stylist-photo">
+              <img src="img/quan.jpg" alt="Ethan - Grooming Expert">
+            </div>
+            <h3>Trần Quân</h3>
+            <p class="stylist-title">Barber &amp; grooming expert</p>
+            <div class="stylist-socials">
+              <a href="#" aria-label="Ethan Instagram">IG</a>
+              <a href="#" aria-label="Ethan Facebook">FB</a>
+              <a href="#" aria-label="Ethan Pinterest">PI</a>
+            </div>
+          </article>
+
+          <article class="stylist-card">
+            <div class="stylist-photo">
+              <img src="img/lookbook1.jpg" alt="Sophia - Texture Specialist">
+            </div>
+            <h3>Sophia Hart</h3>
+            <p class="stylist-title">Texture specialist</p>
+            <div class="stylist-socials">
+              <a href="#" aria-label="Sophia Instagram">IG</a>
+              <a href="#" aria-label="Sophia Facebook">FB</a>
+              <a href="#" aria-label="Sophia Pinterest">PI</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <!-- <section id="testimonials" class="section testimonials">
+      <div class="container">
+        <header class="section-header section-header--center">
+          <h2>Client Stories</h2>
+          <p>Real experiences from our guests.</p>
+        </header>
+
+        <div class="testimonial-slider">
+          <button class="slider-arrow prev" aria-label="Previous testimonial">&larr;</button>
+
+          <div class="testimonial-track">
+            <article class="testimonial active">
+              <div class="quote-icon">&ldquo;</div>
+              <p>
+                From the moment I walked in, I felt like I was in a luxury hotel. My balayage has never looked this
+                seamless and glossy.
+              </p>
+              <h3>Isabella M.</h3>
+              <span class="testimonial-meta">Balayage &amp; Cut</span>
+            </article>
+
+            <article class="testimonial">
+              <div class="quote-icon">&ldquo;</div>
+              <p>
+                The team truly listens. My cut grows out beautifully every time and the scalp ritual is pure heaven.
+              </p>
+              <h3>Daniel K.</h3>
+              <span class="testimonial-meta">Men's Grooming</span>
+            </article>
+
+            <article class="testimonial">
+              <div class="quote-icon">&ldquo;</div>
+              <p>
+                Sleek, modern, and relaxing. I left feeling refreshed, confident, and completely taken care of.
+              </p>
+              <h3>Emily R.</h3>
+              <span class="testimonial-meta">Treatment &amp; Style</span>
+            </article>
+          </div>
+
+          <button class="slider-arrow next" aria-label="Next testimonial">&rarr;</button>
+        </div>
+
+        <div class="slider-dots" aria-hidden="true">
+          <button class="dot active" data-index="0"></button>
+          <button class="dot" data-index="1"></button>
+          <button class="dot" data-index="2"></button>
+        </div>
+      </div>
+    </section> -->
+
+    <!-- Contact / Footer-top -->
+    <section id="contact" class="section contact">
+      <div class="container contact-grid reveal">
+        <div class="contact-details">
+          <h2>Rezervujte si svoj čas</h2>
+          <p>
+            Termíny odporúčame rezervovať vopred. Zavolajte nám alebo nám pošlite správu a náš tím vám pomôže nájsť ideálny čas a službu.
+          </p>
+
+          <div class="contact-info">
+            <p><strong>Adresa</strong><br>Luxury Avenue 123, Salon Studio, Bratislava</p>
+            <p><strong>Telefón</strong><br><a href="tel:+421234567890">+421 (0) 234 567 890</a></p>
+            <p><strong>E‑mail</strong><br><a href="mailto:hello@behairbarber.sk">behairbarber@gmail.com</a></p>
+          </div>
+
+          <form class="contact-form">
+            <div class="form-row">
+              <input type="text" name="name" placeholder="Meno a priezvisko *" required>
+              <input type="tel" name="phone" placeholder="Telefón *" required>
+            </div>
+            <div class="form-row">
+              <input type="email" name="email" placeholder="E‑mail (nepovinné)">
+              <input type="text" name="service" placeholder="Preferovaná služba">
+            </div>
+            <div class="form-row">
+              <label class="datetime-label">
+                <span>Preferovaný dátum &amp; čas (Slovensko) *</span>
+                <input
+                  type="text"
+                  id="appointment_datetime"
+                  name="appointment_datetime"
+                  placeholder="Kliknite pre výber dátumu a času"
+                  readonly
+                  required
+                >
+              </label>
+            </div>
+            <textarea name="message" rows="4" placeholder="Opíšte, aký look si želáte"></textarea>
+            <p class="form-note">
+              * Povinné polia: meno, telefón a preferovaný dátum &amp; čas. Ostatné údaje sú nepovinné, ale pomôžu nám lepšie sa pripraviť.
+            </p>
+            <button type="submit" class="btn btn-gold">Požiadať o termín</button>
+          </form>
+        </div>
+
+        <div class="contact-map">
+          <!-- Google Maps Embed Placeholder -->
+          <div class="map-placeholder">
+            <p>Google Maps Embed</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <img src="img/be-logo.svg" alt="Be Luxury Salon Logo">
+        </div>
+        <p class="footer-tagline">Luxusný hair &amp; barber ateliér v modernom mestskom priestore.</p>
+      </div>
+
+      <div class="footer-links">
+        <h4>Rýchle odkazy</h4>
+        <ul>
+          <li><a href="#services">Služby</a></li>
+          <li><a href="#gallery">Lookbook</a></li>
+          <li><a href="#stylists">Náš tím</a></li>
+          <li><a href="#contact">Kontakt</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-contact">
+        <h4>Kontakt</h4>
+        <p>Luxury Avenue 123, Salon Studio, Bratislava</p>
+        <p><a href="tel:+421234567890">+421 (0) 234 567 890</a></p>
+        <p><a href="mailto:behairbarber@gmail.com">behairbarber@gmail.com</a></p>
+        <div class="footer-socials">
+          <a href="#" aria-label="Instagram">IG</a>
+          <a href="#" aria-label="Facebook">FB</a>
+          <a href="#" aria-label="Pinterest">PI</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; <span id="year"></span> Be Hair & Barber. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Sticky Mobile Bottom Bar -->
+  <div class="mobile-sticky-bar">
+    <a href="tel:+421234567890" class="bar-btn bar-call">Zavolať</a>
+    <a href="#contact" class="bar-btn bar-book">Rezervovať</a>
+  </div>
+
+  <!-- Success Modal -->
+  <div id="successModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>✅ Rezervácia bola úspešne odoslaná!</h2>
+        <button class="modal-close" aria-label="Zavrieť">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="success-icon">✨</div>
+        <p class="success-message">Ďakujeme za rezerváciu v Be Hair &amp; Barber. Čoskoro vás budeme kontaktovať na potvrdenie termínu.</p>
+        
+        <div class="appointment-details">
+          <h3>Informácie o rezervácii</h3>
+          <div class="detail-row">
+            <span class="detail-label">Meno klienta:</span>
+            <span class="detail-value" id="modal-name">-</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Telefón:</span>
+            <span class="detail-value" id="modal-phone">-</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">E‑mail:</span>
+            <span class="detail-value" id="modal-email">-</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Služba:</span>
+            <span class="detail-value" id="modal-service">-</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Čas:</span>
+            <span class="detail-value" id="modal-time">-</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Poznámka:</span>
+            <span class="detail-value" id="modal-message">-</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-gold modal-close-btn">Zavrieť</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
+
