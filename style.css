@@ -1152,10 +1152,17 @@ main {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .form-group--full {
   grid-column: 1 / -1;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  box-sizing: border-box;
 }
 
 .form-group label {
@@ -1282,6 +1289,37 @@ main {
     font-size: 16px; /* Prevent zoom on iOS */
   }
 
+  .form-group--full {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .datetime-label {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .datetime-label input[type="text"],
+  .datetime-label input[type="datetime-local"],
+  #appointment_datetime {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 0.85rem 0.9rem !important;
+    font-size: 16px !important; /* Prevent zoom on iOS */
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+  }
+
+  .form-group {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+  }
+
   .btn-submit {
     width: 100%;
     padding: 1rem 2rem;
@@ -1356,6 +1394,8 @@ main {
   flex-direction: column;
   gap: 0.5rem;
   width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .datetime-label span {
@@ -1370,6 +1410,8 @@ main {
 .datetime-label input[type="datetime-local"],
 #appointment_datetime {
   width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
   border-radius: var(--radius-sm);
   border: 1px solid rgba(255, 255, 255, 0.16);
   background: rgba(0, 0, 0, 0.65);
@@ -1385,6 +1427,8 @@ main {
   -webkit-user-select: none;
   touch-action: auto !important; /* Allow touch for calendar */
   -webkit-touch-callout: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .datetime-label input[type="text"]:focus,
