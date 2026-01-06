@@ -41,7 +41,7 @@
         </ul>
       </nav>
 
-      <a href="#contact" class="btn btn-gold header-cta">Rezervovať termín</a>
+      <a href="#booking" class="btn btn-gold header-cta">Rezervovať termín</a>
 
       <button class="nav-toggle" aria-label="Toggle navigation">
         <span></span>
@@ -57,7 +57,7 @@
         <li><a href="#gallery">Galéria</a></li>
         <li><a href="#stylists">Náš tím</a></li>
         <li><a href="#contact">Kontakt</a></li>
-        <li><a href="#contact" class="btn btn-gold mobile-cta">Rezervovať termín</a></li>
+        <li><a href="#booking" class="btn btn-gold mobile-cta">Rezervovať termín</a></li>
       </ul>
     </nav>
   </header>
@@ -79,7 +79,7 @@
           <span class="hero-subtitle-accent">Vstúpte do sveta, kde sa vlasy stávajú dizajnom.</span>
         </p>
         <div class="hero-actions">
-          <a href="#contact" class="btn btn-gold">Objednať termín</a>
+          <a href="#booking" class="btn btn-gold">Objednať termín</a>
           <a href="#gallery" class="btn btn-outline">Pozrieť lookbook</a>
         </div>
       </div>
@@ -248,25 +248,46 @@
           <button class="gallery-tab" data-category="color" type="button">Farbenie</button>
         </div>
 
-        <div class="gallery-grid reveal">
-          <figure class="gallery-item" data-category="women">
-            <img src="img/women1.webp" alt="Elegant women's hairstyle">
-          </figure>
-          <figure class="gallery-item" data-category="women color">
-            <img src="img/wm2.webp" alt="Balayage color">
-          </figure>
-          <figure class="gallery-item" data-category="men">
-            <img src="img/m1.jpeg" alt="Men's haircut">
-          </figure>
-          <figure class="gallery-item" data-category="men color">
-            <img src="img/m2.webp" alt="Men's color style">
-          </figure>
-          <figure class="gallery-item" data-category="women">
-            <img src="img/c3.webp" alt="Women's haircut">
-          </figure>
-          <figure class="gallery-item" data-category="color">
-            <img src="img/c2.webp" alt="Creative color">
-          </figure>
+        <div class="gallery-wrapper">
+          <!-- Gallery Slider for both Desktop and Mobile -->
+          <div class="gallery-slider">
+            <button class="gallery-arrow gallery-arrow-prev" aria-label="Previous slide">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M15 18l-6-6 6-6"/>
+              </svg>
+            </button>
+            
+            <div class="gallery-slider-track">
+              <div class="gallery-grid reveal">
+                <figure class="gallery-item" data-category="women">
+                  <img src="img/women1.webp" alt="Elegant women's hairstyle">
+                </figure>
+                <figure class="gallery-item" data-category="women color">
+                  <img src="img/wm2.webp" alt="Balayage color">
+                </figure>
+                <figure class="gallery-item" data-category="men">
+                  <img src="img/m1.jpeg" alt="Men's haircut">
+                </figure>
+                <figure class="gallery-item" data-category="men color">
+                  <img src="img/m2.webp" alt="Men's color style">
+                </figure>
+                <figure class="gallery-item" data-category="women">
+                  <img src="img/c3.webp" alt="Women's haircut">
+                </figure>
+                <figure class="gallery-item" data-category="color">
+                  <img src="img/c2.webp" alt="Creative color">
+                </figure>
+              </div>
+            </div>
+            
+            <button class="gallery-arrow gallery-arrow-next" aria-label="Next slide">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 18l6-6-6-6"/>
+              </svg>
+            </button>
+          </div>
+          
+          <div class="gallery-dots"></div>
         </div>
       </div>
     </section>
@@ -387,55 +408,124 @@
       </div>
     </section> -->
 
+    <!-- Booking Form Section -->
+    <section id="booking" class="section booking-section">
+      <div class="container">
+        <header class="section-header section-header--center reveal">
+          <h2>Rezervujte si termín</h2>
+          <p>Vyplňte formulár nižšie a náš tím vás bude kontaktovať na potvrdenie termínu.</p>
+        </header>
+
+        <div class="booking-form-wrapper reveal">
+          <form class="booking-form">
+            <div class="form-section">
+              <h3 class="form-section-title">Vaše údaje</h3>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="booking_name">Meno a priezvisko *</label>
+                  <input type="text" id="booking_name" name="name" placeholder="Napríklad: Ján Novák" required>
+                </div>
+                <div class="form-group">
+                  <label for="booking_phone">Telefón *</label>
+                  <input type="tel" id="booking_phone" name="phone" placeholder="+421 912 345 678" required>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="booking_email">E‑mail <span class="optional">(nepovinné)</span></label>
+                  <input type="email" id="booking_email" name="email" placeholder="vas.email@example.com">
+                </div>
+                <div class="form-group">
+                  <label for="booking_service">Preferovaná služba</label>
+                  <input type="text" id="booking_service" name="service" placeholder="Napríklad: Strih &amp; styling">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <h3 class="form-section-title">Dátum a čas</h3>
+              <div class="form-group form-group--full">
+                <label for="appointment_datetime" class="datetime-label">
+                  <span>Preferovaný dátum &amp; čas (Slovensko) *</span>
+                  <input
+                    type="text"
+                    id="appointment_datetime"
+                    name="appointment_datetime"
+                    placeholder="Kliknite pre výber dátumu a času"
+                    readonly
+                    required
+                  >
+                </label>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <h3 class="form-section-title">Poznámky</h3>
+              <div class="form-group form-group--full">
+                <label for="booking_message">Opíšte, aký look si želáte <span class="optional">(nepovinné)</span></label>
+                <textarea id="booking_message" name="message" rows="4" placeholder="Napríklad: Chcel by som moderný pánsky strih s fade efektom..."></textarea>
+              </div>
+            </div>
+
+            <div class="form-footer">
+              <p class="form-note">
+                <span class="required-indicator">*</span> Povinné polia: meno, telefón a preferovaný dátum &amp; čas. Ostatné údaje sú nepovinné, ale pomôžu nám lepšie sa pripraviť.
+              </p>
+              <button type="submit" class="btn btn-gold btn-submit">
+                <span>Odoslať rezerváciu</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
     <!-- Contact / Footer-top -->
     <section id="contact" class="section contact">
       <div class="container contact-grid reveal">
         <div class="contact-details">
-          <h2>Rezervujte si svoj čas</h2>
+          <h2>Kontakt</h2>
           <p>
-            Termíny odporúčame rezervovať vopred. Zavolajte nám alebo nám pošlite správu a náš tím vám pomôže nájsť ideálny čas a službu.
+            Máte otázky alebo potrebujete pomoc? Kontaktujte nás a radi vám pomôžeme.
           </p>
 
           <div class="contact-info">
-            <p><strong>Adresa</strong><br>Luxury Avenue 123, Salon Studio, Bratislava</p>
+            <p><strong>Adresa</strong><br>Luxury Avenue 123, Salon Studio, Kosice, Slovakia</p>
             <p><strong>Telefón</strong><br><a href="tel:+421234567890">+421 (0) 234 567 890</a></p>
             <p><strong>E‑mail</strong><br><a href="mailto:hello@behairbarber.sk">behairbarber@gmail.com</a></p>
           </div>
-
-          <form class="contact-form">
-            <div class="form-row">
-              <input type="text" name="name" placeholder="Meno a priezvisko *" required>
-              <input type="tel" name="phone" placeholder="Telefón *" required>
-            </div>
-            <div class="form-row">
-              <input type="email" name="email" placeholder="E‑mail (nepovinné)">
-              <input type="text" name="service" placeholder="Preferovaná služba">
-            </div>
-            <div class="form-row">
-              <label class="datetime-label">
-                <span>Preferovaný dátum &amp; čas (Slovensko) *</span>
-                <input
-                  type="text"
-                  id="appointment_datetime"
-                  name="appointment_datetime"
-                  placeholder="Kliknite pre výber dátumu a času"
-                  readonly
-                  required
-                >
-              </label>
-            </div>
-            <textarea name="message" rows="4" placeholder="Opíšte, aký look si želáte"></textarea>
-            <p class="form-note">
-              * Povinné polia: meno, telefón a preferovaný dátum &amp; čas. Ostatné údaje sú nepovinné, ale pomôžu nám lepšie sa pripraviť.
-            </p>
-            <button type="submit" class="btn btn-gold">Požiadať o termín</button>
-          </form>
         </div>
 
         <div class="contact-map">
-          <!-- Google Maps Embed Placeholder -->
-          <div class="map-placeholder">
-            <p>Google Maps Embed</p>
+          <div class="map-wrapper">
+            <iframe
+              class="google-map"
+              id="salon-map"
+              src=""
+              width="100%"
+              height="100%"
+              style="border:0;"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              title="Be Hair & Barber Location"
+            ></iframe>
+            <a 
+              href="https://maps.app.goo.gl/5eZg28bd8Ud3qJgW8?g_st=ipc" 
+              class="map-link-overlay" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              aria-label="Otvoriť mapu v Google Maps"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+              <span>Otvoriť v Google Maps</span>
+            </a>
           </div>
         </div>
       </div>
@@ -464,7 +554,7 @@
 
       <div class="footer-contact">
         <h4>Kontakt</h4>
-        <p>Luxury Avenue 123, Salon Studio, Bratislava</p>
+        <p>Luxury Avenue 123, Salon Studio, Kosice, Slovakia</p>
         <p><a href="tel:+421234567890">+421 (0) 234 567 890</a></p>
         <p><a href="mailto:behairbarber@gmail.com">behairbarber@gmail.com</a></p>
         <div class="footer-socials">
@@ -483,7 +573,7 @@
   <!-- Sticky Mobile Bottom Bar -->
   <div class="mobile-sticky-bar">
     <a href="tel:+421234567890" class="bar-btn bar-call">Zavolať</a>
-    <a href="#contact" class="bar-btn bar-book">Rezervovať</a>
+    <a href="#booking" class="bar-btn bar-book">Rezervovať</a>
   </div>
 
   <!-- Success Modal -->
